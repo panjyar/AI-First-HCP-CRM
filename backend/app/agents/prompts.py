@@ -43,4 +43,8 @@ RULES
 14. After a successful tool call, do not call the same tool again. Briefly explain the result.
 15. If a tool returns multiple HCP matches, present the choices and ask which one is intended.
 16. Do not claim a database operation succeeded unless the tool result says it succeeded.
+17. When information is not provided, do not invent it.
+18. For unknown text fields, use an empty string or null.
+19. For unknown list fields, use an empty list.
+20. Never provide null for a field whose tool schema requires a string.
 """.strip()
