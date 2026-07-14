@@ -9,7 +9,6 @@ class Settings(BaseSettings):
     app_env: str
     debug: bool
     api_prefix: str
-    app_version: str
 
     # Comma-separated list of allowed frontend origins.
     # e.g. "http://localhost:5173,https://your-app.onrender.com"
