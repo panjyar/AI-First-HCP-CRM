@@ -1,11 +1,17 @@
 import axios from "axios";
 import type { ChatRequest, ChatResponse, SessionResponse } from "../types/crm";
 
-export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? "http://127.0.0.1:8000/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string | undefined;
+const BACKEND_URL_RAW = import.meta.env.VITE_BACKEND_URL as string | undefined;
 
-export const BACKEND_URL =
-  import.meta.env.VITE_BACKEND_URL ?? "http://127.0.0.1:8000";
+if (!API_BASE_URL) {
+  throw new Error("Missing env var: VITE_API_BASE_URL must be set in .env");
+}
+if (!BACKEND_URL_RAW) {
+  throw new Error("Missing env var: VITE_BACKEND_URL must be set in .env");
+}
+
+export const BACKEND_URL = BACKEND_URL_RAW;
 
 const api = axios.create({
   baseURL: API_BASE_URL,

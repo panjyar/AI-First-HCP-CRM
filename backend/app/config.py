@@ -4,19 +4,22 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str = "AI-First HCP CRM API"
-    app_env: str = "development"
-    debug: bool = True
-    api_prefix: str = "/api"
-    frontend_url: str = "http://localhost:5173"
+    # All values must be set in the .env file — no hardcoded defaults.
+    app_name: str
+    app_env: str
+    debug: bool
+    api_prefix: str
+    app_version: str
+
+    # Comma-separated list of allowed frontend origins.
+    # e.g. "http://localhost:5173,https://your-app.onrender.com"
+    cors_origins: str
 
     groq_api_key: str
-    groq_model: str = "llama-3.3-70b-versatile"
+    groq_model: str
 
-    database_url: str = (
-        "postgresql+asyncpg://postgres:postgres@localhost:5432/hcp_crm"
-    )
-    db_echo: bool = False
+    database_url: str
+    db_echo: bool
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -24,6 +27,11 @@ class Settings(BaseSettings):
         case_sensitive=False,
         extra="ignore",
     )
+
+    @property
+    def allowed_origins(self) -> list[str]:
+        """Parse the comma-separated CORS_ORIGINS into a list."""
+        return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
 
 
 @lru_cache
