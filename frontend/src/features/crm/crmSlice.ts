@@ -111,7 +111,8 @@ function getErrorMessage(error: unknown): string {
       return "The AI request timed out. Please try again.";
     }
     if (!error.response) {
-      return "Could not connect to the backend. Confirm FastAPI is running on port 8000.";
+      const backendUrl = import.meta.env.VITE_BACKEND_URL ?? "the backend";
+      return `Could not connect to ${backendUrl}. Check that the server is running and CORS is configured correctly.`;
     }
   }
 
